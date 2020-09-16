@@ -4,7 +4,7 @@ ROOTGLIBS  = $(shell root-config --glibs)
 CXXFLAGS  += $(ROOTCFLAGS)
 LIBS       = $(ROOTLIBS) 
 GLIBS      = $(ROOTGLIBS)
-GXX	   = /usr/bin/g++ -Wall -O3
+GXX	   = g++ -Wall -O3
 
 RKdemo:  RKdemo.cpp RK
 	$(GXX) -o RKdemo RKdemo.cpp $(ROOTCFLAGS) $(LIBS) $(ROOTGLIBS) RK.o
