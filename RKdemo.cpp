@@ -28,6 +28,7 @@ int main(int argc, char **argv){
   // Two examples are given.  Choose a function for testing
   TGraph tg1=RK1Solve(fun1,3,30,0,3);                     // initial condition y(0)=3
   TGraph tg2=RK2Solve(fun1,3,30,0,3);
+  TGraph tg4 = RK4Solve(fun1,3,30,0,3);
   TF1 fun_sol=TF1("fun_sol","3*exp(-2*x)",0,3);           // exact solution
   //TGraph tg1=RK1Solve(fun2,2,100,1,100);                // initial condition y(1)=2
   //TGraph tg2=RK2Solve(fun2,2,100,1,100);
@@ -44,10 +45,13 @@ int main(int argc, char **argv){
 
   tg1.SetMarkerSize(0.015*dh/8);  // size scale: 1 = 8 pixels, so here we choose the size to be 1.5% of the window height
   tg2.SetMarkerSize(0.015*dh/8);
+  tg4.SetMarkerSize(0.015*dh/8);
   tg1.SetMarkerStyle(kFullTriangleUp);
   tg2.SetMarkerStyle(kFullTriangleDown);
+  tg4.SetMarkerStyle(kFullCross);
   tg1.SetMarkerColor(kRed);
   tg2.SetMarkerColor(kGreen-2);
+  tg4.SetMarkerColor(kBlue);
   fun_sol.SetLineColor(kBlack);
   fun_sol.SetLineStyle(2);
   
@@ -55,11 +59,13 @@ int main(int argc, char **argv){
   tg1.SetTitle("ODE demo;x;y");
   tg1.Draw("AP");
   tg2.Draw("P");
+  tg4.Draw("P");
   fun_sol.Draw("same");
   
   TLegend *tl = new TLegend(0.6,0.7,0.9,0.9);
   tl->AddEntry(&tg1,"RK1 Solution","p");
   tl->AddEntry(&tg2,"RK2 Solution","p");
+  tl->AddEntry(&tg4,"RK4 Solution","p");
   tl->AddEntry(&fun_sol,"Exact Solution","l");
   tl->Draw();
   c1->Draw();
