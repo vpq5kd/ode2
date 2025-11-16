@@ -59,7 +59,7 @@ TGraph RK4Solve(double (*f)(double x, double y), double y0,
     k2 = h*f(x+h/2,y+k1/2);
     k3 = h*f(x+h/2, y+k2/2);
     k4 = h*f(x+h, y+k3);
-    y += ((1/6) *(k1+(2*k2)+(2*k3)+k4));
+    y += ((1.0/6.0) *(k1+(2*k2)+(2*k3)+k4));
     x+=h;
     printf("Step %d: x =%lf, y=%lf\n",i,x,y);
     tg.SetPoint(i+1,x,y);
