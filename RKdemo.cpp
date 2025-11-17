@@ -19,17 +19,20 @@ double fun1(double x, double y){
 
 double fun2(double x, double y){
   return -y/x-2/(x*x);  // f = y'(x,y) = -y(x)/x - 2/x^2 
-}                       // -2*log(|x|)/x+2/x  ; with initial condition y(0)=2
+}// -2*log(|x|)/x+2/x  ; with initial condition y(0)=2
+double fun3(double x, double y){
+	return (y-3*x*x*x)/x;
+}
 
 int main(int argc, char **argv){
   TApplication theApp("App", &argc, argv); // init ROOT App for displays
 
   // solve our DEQ using RK1 or RK2 methods!
   // Two examples are given.  Choose a function for testing
-  TGraph tg1=RK1Solve(fun1,3,30,0,3);                     // initial condition y(0)=3
-  TGraph tg2=RK2Solve(fun1,3,30,0,3);
-  TGraph tg4 = RK4Solve(fun1,3,30,0,3);
-  TF1 fun_sol=TF1("fun_sol","3*exp(-2*x)",0,3);           // exact solution
+  TGraph tg1=RK1Solve(fun3,0,30,1,4);                     // initial condition y(0)=3
+  TGraph tg2=RK2Solve(fun3,0,30,1,4);
+  TGraph tg4 = RK4Solve(fun3,0,30,1,4);
+  TF1 fun_sol=TF1("fun_sol","-1.5*x*x*x +1.5*x",1,3);           // exact solution
   //TGraph tg1=RK1Solve(fun2,2,100,1,100);                // initial condition y(1)=2
   //TGraph tg2=RK2Solve(fun2,2,100,1,100);
   //TF1 fun_sol=TF1("fun_sol","-2*log(x)/x+2/x",1,100);   // exact solution
@@ -74,13 +77,14 @@ int main(int argc, char **argv){
 
   // retreive the data from the graphs and write to a file
   FILE *fp=fopen("RKdemo.dat","w");
-  double *x, *y1, *y2;
+  double *x, *y1, *y2, *y4;
   x=tg1.GetX();
   y1=tg1.GetY();
   y2=tg2.GetY();
-  fprintf(fp,"#%8s %9s %9s %9s\n","x","RK1","RK2","Exact");
+  y4 = tg4.GetY();
+  fprintf(fp,"#%8s %9s %9s %9s %9s\n","x","RK1","RK2","RK4","Exact");
   for (int i=0; i<tg1.GetN(); i++){
-    fprintf(fp,"%9.4lf %9.4lf %9.4lf %9.4lf\n",x[i],y1[i],y2[i],fun_sol.Eval(x[i]));
+    fprintf(fp,"%9.4lf %9.4lf %9.4lf %9.4lf %9.4lf\n",x[i],y1[i],y2[i],y4[i],fun_sol.Eval(x[i]));
   }
   fclose(fp);
   
