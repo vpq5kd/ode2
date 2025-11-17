@@ -59,7 +59,7 @@ int main(int argc, char **argv){
   fun_sol.SetLineStyle(2);
   
   // plot the results
-  tg1.SetTitle("#y' = frac{y-3x^{3}}{x};x;y");
+  tg1.SetTitle("y' = #frac{y-3x^{3}}{x};x;y");
   tg1.Draw("AP");
   tg2.Draw("P");
   tg4.Draw("P");
